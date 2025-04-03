@@ -1,0 +1,28 @@
+name: deploy
+
+permissions:
+  id-token: write
+  pages: write
+  contents: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+
+    steps:
+      - name: 🛠️ Checkout
+        uses: actions/checkout@v4
+
+      - name: 📤 Upload artifacts
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./.
